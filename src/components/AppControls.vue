@@ -10,9 +10,8 @@ export default {
 </script>
 
 <template>
-    <div class="text-end my-2">
-        <button type="button" class="btn btn-primary mx-2" @click="$emit('prev')">Prev page</button>
-        <button type="button" class="btn btn-primary" @click="$emit('next')">Next page</button>
+    <div class="text-center my-2">
+        <button type="button" class="btn btn-danger mx-2" @click="$emit('show')">Show more</button>
     </div>
 </template>
 

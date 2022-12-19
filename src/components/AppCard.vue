@@ -26,11 +26,21 @@ export default {
             //size value: original, w{width in px}
         },
 
-        //return flag icon class 
+        //return flag-icon library class 
         getFlagcode(value) {
-            if (value === 'en') {
-                value = 'gb';
-
+            switch (value) {
+                case 'en':
+                    value = 'gb'
+                    break;
+                case 'ja':
+                    value = 'jp'
+                    break;
+                case 'zh':
+                    value = 'cn'
+                case 'ko':
+                    value = 'kr'
+                default:
+                    break;
             }
             return 'fi fi-' + value;
             //for flag-icon libraries
@@ -41,7 +51,7 @@ export default {
 
 <template>
     <!-- card -->
-    <div class="card bg-dark h-100" v-if="item.media_type !== 'person'">
+    <div class="card h-100" v-if="item.media_type !== 'person'">
         <!-- card image -->
         <img :src="getImage('w500', item.poster_path)" class="card-img" :alt="item.title" v-if="imgCheck">
         <!-- if poster_path is null show only card infos -->
@@ -67,7 +77,7 @@ export default {
     </div>
 
     <!-- person card -->
-    <div class="card bg-dark" v-if="item.media_type == 'person'">
+    <div class="card" v-if="item.media_type == 'person'">
         <!-- card image -->
         <img :src="getImage('w342', item.profile_path)" class="img-card" :alt="item.name" v-if="imgCheck">
         <div class="card-img-overlay bg-dark bg-opacity-75 text-light custom"
@@ -90,7 +100,12 @@ export default {
 }
 
 .card {
-    min-height: 295px !important;
+    min-height: 200px !important;
+    background-color: black;
+
+    .card-img-overlay {
+        overflow-y: auto;
+    }
 }
 
 div {

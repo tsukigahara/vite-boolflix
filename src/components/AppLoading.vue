@@ -20,7 +20,7 @@ export default {
 
 <template>
     <div class="spinner">
-        <font-awesome-icon icon="fa-solid fa-circle-notch" size="2x" spin />
+        <font-awesome-icon icon="fa-solid fa-circle-notch" color="red" size="3x" spin />
     </div>
 </template>
 
@@ -35,6 +35,6 @@ export default {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: white;
+    background-color: black;
 }
 </style>
