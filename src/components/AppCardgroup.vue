@@ -17,7 +17,7 @@ export default {
     <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
         <!-- vfor to generate cards -->
         <!-- store.charaList is an Array -->
-        <div class="col" v-for="(obj, index) in store.charaList" :key="index">
+        <div class="col" v-for="(obj, index) in store.apiData" :key="index">
             <!-- props obj to AppCard-->
             <AppCard :info="obj" />
         </div>

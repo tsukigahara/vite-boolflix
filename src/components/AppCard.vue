@@ -1,9 +1,23 @@
 <script>
+import { store } from '../store.js'
 export default {
     props: {
         // got an Object from props
         info: Object
-    }
+    },
+    data() {
+        return {
+            store,
+
+        }
+    },
+    methods: {
+        getImage(size, file_path) {
+            return store.img_base_url + size + file_path
+            //size value: original, w{width in px}
+        }
+
+    },
 }
 </script>
 
@@ -11,21 +25,11 @@ export default {
     <!-- card -->
     <div class="card h-100 bg-light">
         <!-- card image -->
-        <img :src="info.image" class="card-img-top" :alt="info.name">
+        <img :src="getImage('original', info.poster_path)" class="card-img-top" :alt="info.title">
         <!-- card body -->
         <div class="card-body">
             <!-- card title -->
-            <h5 class="card-title">{{ info.name }}</h5>
-        </div>
-        <!-- card footers -->
-        <div class="card-footer bg-light">
-            <small class="text-muted">{{ info.status }}</small>
-        </div>
-        <div class="card-footer bg-light">
-            <small class="text-muted">{{ info.species }}</small>
-        </div>
-        <div class="card-footer bg-light">
-            <small class="text-muted">{{ info.gender }}</small>
+            <h5 class="card-title">{{ info.title }}</h5>
         </div>
     </div>
 </template>
