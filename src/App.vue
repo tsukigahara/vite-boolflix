@@ -1,20 +1,28 @@
-<script setup>
+<script>
 // import Component
 import AppCardgroup from './components/AppCardgroup.vue'
 import AppSearch from './components/AppSearch.vue'
 import AppControls from './components/AppControls.vue'
-// import state 
+import AppLoading from './components/AppLoading.vue'
+
+// import store
 import { store } from './store.js'
+
 //import axios library
 import axios from 'axios'
-</script>
 
-<script>
+/////////////////////////////////////////////////////////////////////
 export default {
+  components: {
+    AppCardgroup,
+    AppSearch,
+    AppControls,
+    AppLoading,
+  },
   data() {
     return {
-      store, // a cosa serve scriverlo qua???? 
-      // index: 0 // test value
+      store,
+      loading: true,
     };
   },
   methods: {
@@ -22,7 +30,9 @@ export default {
     // get data from api
     getApiData() {
       //get API
-      axios.get(store.apiURL + store.query + store.apiKEY)
+      var url = store.apiURL + store.apiURLPath + store.apiKEY + store.query + '&page=' + store.pageCount;
+      console.log(url)
+      axios.get(url)
         .then(function (response) {
           // data of api
           store.apiInfo = response.data.page;
@@ -33,16 +43,24 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
+        })
+        .finally(() => {
+          // loading page booalean
+          this.loading = false
         });
+
     },
     getQuery(type, media_type, time_window) {
       //media_type: all, movie, tv, person
       //time_window: day, week
       switch (type) {
         case "trending":
-          store.query = '/trending/' + media_type + '/' + time_window
+          store.apiURLPath = 'trending/' + media_type + '/' + time_window;
           break;
-
+        case "search":
+          store.apiURLPath = 'search/' + media_type;
+          store.query = '&query=' + encodeURI(store.searchInput);
+          break;
         default:
           break;
       }
@@ -54,12 +72,14 @@ export default {
     this.getQuery('trending', 'movie', 'week');
   },
 
+
 }
 </script>
 
 <template>
   <header class="container">
-    <AppSearch @search="getApiData" />
+    <AppLoading v-if="loading" />
+    <AppSearch @search="getQuery('search', 'movie')" />
   </header>
   <main class="container p-4 mb-5">
     <!-- card grid -->

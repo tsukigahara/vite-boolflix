@@ -19,7 +19,7 @@ export default {
         <!-- store.charaList is an Array -->
         <div class="col" v-for="(obj, index) in store.apiData" :key="index">
             <!-- props obj to AppCard-->
-            <AppCard :info="obj" />
+            <AppCard :item="obj" />
         </div>
     </div>
 </template>

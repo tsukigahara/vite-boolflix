@@ -8,6 +8,7 @@ export const store = reactive({
     searchInput: '',
     selectInput: '',
     query: '',
+    apiURLPath: '',
     pageCount: 1,
     apiKEY: '?api_key=' + '3e27b9bb97ddf0c4830c10c7a9ed9700',
     img_base_url: 'https://image.tmdb.org/t/p/'

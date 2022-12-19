@@ -23,7 +23,7 @@ export default {
             <option value="unknown">Unknown</option>
         </select> -->
         <!-- search input -->
-        <input type="text" class="form-control" v-model="store.searchInput">
+        <input type="text" class="form-control" v-model="store.searchInput" @keyup.enter="$emit('search')">
         <button type="button" class="btn btn-outline-secondary" @click="$emit('search')">Search</button>
     </div>
 </template>
