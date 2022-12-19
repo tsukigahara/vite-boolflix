@@ -30,6 +30,7 @@ export default {
         getFlagcode(value) {
             if (value === 'en') {
                 value = 'gb';
+
             }
             return 'fi fi-' + value;
             //for flag-icon libraries
@@ -40,19 +41,39 @@ export default {
 
 <template>
     <!-- card -->
-    <div class="card bg-light">
+    <div class="card bg-dark h-100" v-if="item.media_type !== 'person'">
         <!-- card image -->
         <img :src="getImage('w500', item.poster_path)" class="card-img" :alt="item.title" v-if="imgCheck">
         <!-- if poster_path is null show only card infos -->
         <div class="card-img-overlay bg-dark bg-opacity-75 text-light" :class="imgCheck == true ? 'my_hover' : ''">
-            <h5 class="card-title">{{ item.title }}</h5>
-            <h6 class="card-title">{{ item.original_title }}</h6>
+            <!-- title -->
+            <h5 class="card-title">{{ item.title }}{{ item.name }}</h5>
+            <!-- original title if title is different -->
+            <h6 class="card-title" v-if="(item.title !== item.original_title) || (item.original_name !== item.name)">
+                {{ item.original_title }}
+                {{ item.original_name }}
+            </h6>
+            <!-- media type -->
+            <h6 class="card-title">{{ item.media_type.toUpperCase() }}</h6>
+            <!-- language -->
             <p class="card-text"><span :class="getFlagcode(item.original_language)"></span> {{
                     item.original_language.toUpperCase()
             }}</p>
+            <!-- reviews -->
             <p class="card-text"><small>{{ (item.vote_average / 2).toFixed(1) }}/5 ({{ item.vote_count }}
                     reviews)</small>
             </p>
+        </div>
+    </div>
+
+    <!-- person card -->
+    <div class="card bg-dark" v-if="item.media_type == 'person'">
+        <!-- card image -->
+        <img :src="getImage('w342', item.profile_path)" class="img-card" :alt="item.name" v-if="imgCheck">
+        <div class="card-img-overlay bg-dark bg-opacity-75 text-light custom"
+            :class="imgCheck == true ? 'my_hover' : ''">
+            <!-- name -->
+            <h5 class="card-title">{{ item.name }}</h5>
         </div>
     </div>
 </template>
@@ -61,12 +82,19 @@ export default {
 // import flag icon library
 @import "/node_modules/flag-icons/css/flag-icons.min.css";
 
-div {
-    cursor: pointer;
+.custom {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
-    height: 295px;
+    min-height: 295px !important;
+}
+
+div {
+    cursor: pointer;
 }
 
 .my_hover {

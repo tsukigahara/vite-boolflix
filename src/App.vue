@@ -51,7 +51,7 @@ export default {
 
     },
     getQuery(type, media_type, time_window) {
-      //media_type: all, movie, tv, person
+      //media_type: all, movie, tv, person, (multi)
       //time_window: day, week
       switch (type) {
         case "trending":
@@ -69,7 +69,7 @@ export default {
   },
   mounted() {
     //load on mount
-    this.getQuery('trending', 'movie', 'week');
+    this.getQuery('trending', 'all', 'week');
   },
 
 
@@ -79,9 +79,9 @@ export default {
 <template>
   <header class="container">
     <AppLoading v-if="loading" />
-    <AppSearch @search="getQuery('search', 'movie')" />
+    <AppSearch @search="getQuery('search', 'multi')" />
   </header>
-  <main class="container p-4 mb-5">
+  <main class="container mb-5">
     <!-- card grid -->
     <AppCardgroup />
     <!-- page controls -->
